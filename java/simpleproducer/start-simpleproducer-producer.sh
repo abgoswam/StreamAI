@@ -8,6 +8,8 @@ echo $STREAMAI_HOME/logs/java/simpleproducer/producer.logs
 
 mvn exec:java -Dexec.mainClass="SimpleProducer" -Dexec.args="teststreamai1" 2>&1 1>$STREAMAI_HOME/logs/java/simpleproducer/producer.log &
 
+sleep 1m
+
 echo echo '...logs available with "tail -f $STREAMAI_HOME/logs/java/simpleproducer/producer.log"'
 
 

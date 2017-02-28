@@ -4,6 +4,8 @@ sbt compile
 
 sbt "run-main KafkaWordCount" 2>&1 1>$STREAMAI_HOME/logs/spark/sparkstreaming101/kafkawordcount.log &
 
+sleep 1m
+
 echo echo '...logs available with "tail -f $STREAMAI_HOME/logs/spark/sparkstreaming101/kafkawordcount.log"'
 
 

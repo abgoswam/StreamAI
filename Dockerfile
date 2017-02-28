@@ -18,7 +18,7 @@ RUN apt-get update
 
 ENV \ 
  SCALA_MAJOR_VERSION=2.11 \
- SBT_VERSION=0.13.9 \
+ SBT_VERSION=0.13.8 \
  KAFKA_CLIENT_VERSION=0.10.1.0 
 
 RUN \
@@ -40,11 +40,6 @@ RUN \
 RUN \
 # Maven for custom builds
  apt-get install -y maven 
-
-RUN \
-# Get Latest StreamAI Code
- cd ~ \
- && git clone https://github.com/abgoswam/streamai 
 
 RUN \
 # Sbt
