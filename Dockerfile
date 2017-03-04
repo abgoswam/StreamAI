@@ -35,7 +35,14 @@ RUN \
  && apt-get install -y git \
  && apt-get install -y openssh-server \
  && apt-get install -y apache2 \
- && apt-get install -y libssl-dev
+ && apt-get install -y libssl-dev \
+ && apt-get install python3.5 \
+ && apt-get install python3-pip \
+ && pip3 install flask==0.12 \
+ && pip3 install Flask-Classy==0.6.10 \
+ && pip3 install kafka-python==1.3.2 \
+ && pip3 install bokeh==0.12.4
+
 
 RUN \
 # Maven for custom builds

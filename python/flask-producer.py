@@ -4,6 +4,10 @@ from flask import Flask, Response
 app = Flask(__name__)
 
 import csv
+
+import random
+import time
+
 from kafka import KafkaProducer
 
 
@@ -37,19 +41,24 @@ def plotly():
     producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
     for line in dataset:
-        one_line = ''
-        for col in line:
-            one_line += col
 
-        producer.send("AboPunk", str.encode(one_line))
+        one_line = []
+        for col in line:
+            one_line.append(col)
+
+        one_line = ','.join(str(i) for i in one_line)
+        r = random.randint(1, 10)  # random sleep time between [1,10] seconds
+        time.sleep(r)
+        producer.send("teststreamai1", str.encode(one_line))
 
         producer.flush()
+
     from bokeh.plotting import figure, show, output_file
     from bokeh.sampledata.iris import flowers
 
     import pandas as pd
 
-    df = pd.read_csv('./winequality-red-scaled.csv', sep=',')
+    df = pd.read_csv('./data_files/winequality-red-scaled.csv', sep=',')
 
     train = df[:1000]
     test = df[1000:]
@@ -59,7 +68,6 @@ def plotly():
 
     print(train_Y)
 
-    import random
     train_Y = [(float(x) + random.uniform(0, 1)) for x in train_Y]
 
     train_Y_1 = train_Y[:500]
