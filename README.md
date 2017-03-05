@@ -1,4 +1,9 @@
 # streamai
+# -----------
+# -----------
+# -----------
+
+sudo docker build -t streamai .
 
 sudo docker run --rm -it --net=host streamai
 

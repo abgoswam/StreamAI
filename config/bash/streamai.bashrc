@@ -29,4 +29,8 @@ export PATH=$KAFKA_HOME/bin:$PATH
 export ZOOKEEPER_HOME=$KAFKA_HOME
 export PATH=$ZOOKEEPER_HOME/bin:$PATH
 
+# Flask
+export FLASK_APP=$STREAMAI_HOME/python/flask-producer.py
+export LC_ALL=C.UTF-8
+export LANG=C.UTF-8
 
