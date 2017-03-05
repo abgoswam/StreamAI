@@ -7,7 +7,7 @@ import csv
 
 import random
 import time
-
+import os
 from kafka import KafkaProducer
 
 
@@ -36,7 +36,8 @@ def plotly():
     Returns actual html as a response red from the file
     """
 
-    dataset = read_input_file("./data_files/winequality-red-scaled.csv")
+    data_file_winequality = os.path.join(os.environ['STREAMAI_HOME'], 'python/data_files/winequality-red-scaled.csv')
+    dataset = read_input_file(data_file_winequality)
 
     producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
@@ -58,7 +59,7 @@ def plotly():
 
     import pandas as pd
 
-    df = pd.read_csv('./data_files/winequality-red-scaled.csv', sep=',')
+    df = pd.read_csv(data_file_winequality, sep=',')
 
     train = df[:1000]
     test = df[1000:]
