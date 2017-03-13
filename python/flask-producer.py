@@ -76,13 +76,13 @@ def generate_next_row():
         for col in line:
             one_line.append(col)
 
-        one_line = ','.join(str(i) for i in one_line)
+        quality = one_line[-1]
+        one_line = ','.join(str(i) for i in one_line[:-1])
 
         r = random.randint(1, 10)  # random sleep time between [1,10] seconds
         time.sleep(r)
 
         all_values = one_line.split(',')
-        quality = all_values[len(all_values)-1]
 
         send_value = "("+quality+",[" + one_line + "])"
 
