@@ -81,9 +81,14 @@ def generate_next_row():
         r = random.randint(1, 10)  # random sleep time between [1,10] seconds
         time.sleep(r)
 
+        all_values = one_line.split(',')
+        quality = all_values[len(all_values)-1]
+
+        send_value = "("+quality+",[" + one_line + "])"
+
         producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
-        producer.send('StreamAI', str.encode(one_line))
+        producer.send('StreamAI', str.encode(send_value))
         producer.flush()
 
         yield one_line.join("Send this data to moron abo \n")
