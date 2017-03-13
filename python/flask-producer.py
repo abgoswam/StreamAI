@@ -105,10 +105,10 @@ def send_data_to_bokeh_plot():
 
 @app.route('/')
 def send_data_to_kafka_consumer():
-        """This reads the from winequality-red-scaled.csv for now .
+    """This reads the from winequality-red-scaled.csv for now .
 
-        """
-        return Response(generate_next_row(),mimetype="text/html")
+    """
+    return Response(generate_next_row(), mimetype="text/html")
 
 
 # Simple html / javascript template that could will be
