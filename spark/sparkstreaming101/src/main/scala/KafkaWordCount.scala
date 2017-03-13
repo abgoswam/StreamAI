@@ -24,8 +24,8 @@ object KafkaWordCount {
     val ssc = new StreamingContext(sparkConf, Seconds(10))
 //    ssc.checkpoint("checkpoint")
 
-    Logger.getLogger("org").setLevel(Level.ERROR)
-    Logger.getLogger("akka").setLevel(Level.ERROR)
+      Logger.getLogger("org").setLevel(Level.ERROR)
+      Logger.getLogger("akka").setLevel(Level.ERROR)
 
 //    val topicMap = topics.split(",").map((_, numThreads.toInt)).toMap
     val topicMap = "teststreamai1".split(",").map((_, "5".toInt)).toMap

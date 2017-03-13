@@ -65,13 +65,13 @@ public class SimpleProducer {
 //                    Integer.toString(i), Integer.toString(i)));
 
         while(true) {
-            producer.send(new ProducerRecord<String, String>(topicName, "abhishek", "abhishek"));
+            producer.send(new ProducerRecord<String, String>(topicName, "abhishek", "(5,[0.1,0.2,0.5])"));
 
             //sleep 1 seconds
             Thread.sleep(1000);
             System.out.print(".");
 
-            producer.send(new ProducerRecord<String, String>(topicName, "goswami", "goswami"));
+            producer.send(new ProducerRecord<String, String>(topicName, "goswami", "(4,[0.1,0.2,0.4])"));
 
             //sleep 2 seconds
             Thread.sleep(2000);
