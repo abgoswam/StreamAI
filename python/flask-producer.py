@@ -88,7 +88,7 @@ def generate_next_row():
 
         producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
-        producer.send('StreamAI', str.encode(send_value))
+        producer.send('teststreamai1', str.encode(send_value))
         producer.flush()
 
         yield one_line.join("Send this data to moron abo \n")
