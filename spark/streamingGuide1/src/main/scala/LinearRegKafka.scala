@@ -14,7 +14,7 @@ object LinearRegKafka {
     // The master requires 2 cores to prevent from a starvation scenario.
 
     val conf = new SparkConf().setMaster("local[*]").setAppName("LinearReg")
-    val ssc = new StreamingContext(conf, Seconds(30))
+    val ssc = new StreamingContext(conf, Seconds(10))
 
     Logger.getLogger("org").setLevel(Level.ERROR)
     Logger.getLogger("akka").setLevel(Level.ERROR)
@@ -25,10 +25,8 @@ object LinearRegKafka {
     val topicMap = "teststreamai1".split(",").map((_, "5".toInt)).toMap
     val lines = KafkaUtils.createStream(ssc, "localhost:2181", "testgrp", topicMap).map(_._2)
 
-//    lines.print()
-
     val data = lines.map(LabeledPoint.parse)
-    val numFeatures = 3
+    val numFeatures = 11
     val model = new StreamingLinearRegressionWithSGD()
       .setInitialWeights(Vectors.zeros(numFeatures))
 
@@ -37,6 +35,8 @@ object LinearRegKafka {
 //    model.trainOn(trainingData)
 
     model.predictOnValues(data.map(lp => (-1, lp.features))).print()
+    lines.print()
+
     model.trainOn(data)
 
     ssc.start()

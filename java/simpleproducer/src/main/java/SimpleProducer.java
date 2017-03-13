@@ -65,13 +65,16 @@ public class SimpleProducer {
 //                    Integer.toString(i), Integer.toString(i)));
 
         while(true) {
-            producer.send(new ProducerRecord<String, String>(topicName, "abhishek", "(5,[0.1,0.2,0.5])"));
+            // producer.send(new ProducerRecord<String, String>(topicName, "abhishek", "(5,[0.1,0.2,0.5])"));
+            producer.send(new ProducerRecord<String, String>(topicName, "abhishek", "(5,[-0.0813838294952,0.117931155602,-0.270975609756,-0.0437538016055,-0.0191428073264,-0.0686608707907,-0.0440558034284,0.0773363308015,0.156603782876,-0.0587717622916,-0.157382017607])"));
 
             //sleep 1 seconds
             Thread.sleep(1000);
             System.out.print(".");
 
-            producer.send(new ProducerRecord<String, String>(topicName, "goswami", "(4,[0.1,0.2,0.4])"));
+            // producer.send(new ProducerRecord<String, String>(topicName, "goswami", "(4,[0.1,0.2,0.4])"));
+            producer.send(new ProducerRecord<String, String>(topicName, "abhishek", "(4,[0.0813838294952,0.117931155602,-0.270975609756,-0.0437538016055,-0.0191428073264,-0.0686608707907,-0.0440558034284,0.0773363308015,0.156603782876,-0.0587717622916,-0.157382017607])"));
+
 
             //sleep 2 seconds
             Thread.sleep(2000);
