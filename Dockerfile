@@ -19,7 +19,24 @@ RUN apt-get update
 ENV \ 
  SCALA_MAJOR_VERSION=2.11 \
  SBT_VERSION=0.13.8 \
- KAFKA_CLIENT_VERSION=0.10.1.0 
+ KAFKA_CLIENT_VERSION=0.10.1.0 \
+ DEV_INSTALL_HOME=~ \
+ STREAMAI_HOME=$DEV_INSTALL_HOME/streamai \
+ CONFIG_HOME=$STREAMAI_HOME/config \
+ SCRIPTS_HOME=$STREAMAI_HOME/binsc \
+ LOGS_HOME=$STREAMAI_HOME/logs \
+ JAVA_HOME=/usr/lib/jvm/java-8-oracle \
+ JRE_HOME=$JAVA_HOME/jre \
+ PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH \
+ PATH=$SCRIPTS_HOME/service:$SCRIPTS_HOME/util:$PATH \
+ KAFKA_HOME=$DEV_INSTALL_HOME/kafka_2.11-0.10.1.0 \
+ PATH=$KAFKA_HOME/bin:$PATH \
+ ZOOKEEPER_HOME=$KAFKA_HOME \
+ PATH=$ZOOKEEPER_HOME/bin:$PATH \
+ FLASK_APP=$STREAMAI_HOME/python/flask-producer.py \
+ LC_ALL=C.UTF-8 \
+ LANG=C.UTF-8
+
 
 RUN \
  apt-get update \
@@ -37,7 +54,7 @@ RUN \
  && apt-get install -y apache2 \
  && apt-get install -y libssl-dev \
  && apt-get install -y python3.5 \
- && apt-get install -y python3-pip 
+ && apt-get install -y python3-pip
 
 RUN \
 # Maven for custom builds
@@ -50,23 +67,32 @@ RUN \
  && pip3 install kafka-python==1.3.2 \
  && pip3 install bokeh==0.12.4
 
+# Create a directory to
+RUN mkdir ~/.ssh 
+COPY ./config/ssh_config .ssh/config
+
 RUN \
-# Sbt
+# git clone during image build and setting enviroment variables
+ cd ~ \
+ && git clone https://yogeshgo05@github.com/abgoswam/streamai
+
+RUN \
+ #Sbt
  cd ~ \
  && wget https://dl.bintray.com/sbt/native-packages/sbt/${SBT_VERSION}/sbt-${SBT_VERSION}.tgz \
  && tar xvzf sbt-${SBT_VERSION}.tgz \
  && rm sbt-${SBT_VERSION}.tgz \
  && ln -s /root/sbt/bin/sbt /usr/local/bin \
-# Sbt Clean - This seems weird, but it triggers the full Sbt install which involves a lot of external downloads
- && sbt clean clean-files 
-
+ #Sbt Clean - This seems weird, but it triggers the full Sbt install which involves a lot of external downloads
+ && sbt clean clean-files
 
 RUN \
-# Apache Kafka 
+ #Apache Kafka
  cd ~ \
  && wget http://apache.claz.org/kafka/${KAFKA_CLIENT_VERSION}/kafka_${SCALA_MAJOR_VERSION}-${KAFKA_CLIENT_VERSION}.tgz \
  && tar -xvzf kafka_${SCALA_MAJOR_VERSION}-${KAFKA_CLIENT_VERSION}.tgz  \
  && rm kafka_${SCALA_MAJOR_VERSION}-${KAFKA_CLIENT_VERSION}.tgz
+
 
 
  
