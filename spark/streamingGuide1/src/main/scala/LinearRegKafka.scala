@@ -25,7 +25,10 @@ object LinearRegKafka {
     val topicMap = "teststreamai1".split(",").map((_, "5".toInt)).toMap
     val lines = KafkaUtils.createStream(ssc, "localhost:2181", "testgrp", topicMap).map(_._2)
 
+
     val data = lines.map(LabeledPoint.parse)
+    lines.print()
+
     val numFeatures = 11
     val model = new StreamingLinearRegressionWithSGD()
       .setInitialWeights(Vectors.zeros(numFeatures))
@@ -34,9 +37,7 @@ object LinearRegKafka {
 //    model.predictOnValues(testData.map(lp => (-1, lp.features))).print()
 //    model.trainOn(trainingData)
 
-    model.predictOnValues(data.map(lp => (-1, lp.features))).print()
-    lines.print()
-
+    model.predictOnValues(data.map(lp => (lp.label, lp.features))).print()
     model.trainOn(data)
 
     ssc.start()
