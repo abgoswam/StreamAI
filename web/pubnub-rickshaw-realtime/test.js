@@ -1,4 +1,5 @@
-var pnrickmem = require('./app');
+//var pnrickmem = require('./app');
+var pnrickmem = require('./kafka-app');
 
 pnrickmem.init({
   dev: true

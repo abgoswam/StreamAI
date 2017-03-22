@@ -1,0 +1,132 @@
+var pubnub = require('pubnub');
+var express = require('express');
+var uuid = require('node-uuid');
+var colors = require('colors');
+var kafka = require('kafka-node');
+
+var mem = false;
+
+// set defaults
+var publish_key = "demo";
+var channel = 'pnrickmem-' + uuid.v4();
+var interval_timeout = 1000;
+var dev_mode = false;
+var port = 3345;
+
+// init pubnub
+var pubnub = require("pubnub")({
+    publish_key: publish_key,
+    subscribe_key: publish_key
+});
+
+
+var Consumer = 
+    kafka.Consumer,
+    // The client specifies the ip of the Kafka producer and uses
+    // the zookeeper port 2181
+    client = new kafka.Client("localhost:2181"),
+    // The consumer object specifies the client and topic(s) it subscribes to
+    consumer = new Consumer(client, [ { topic: 'teststreamai2', partition: 0 } ], { autoCommit: true });
+
+
+var megabyte = 1024 * 1024;
+var interval = false;
+
+/*
+var publish_mem = function() {
+    mem = process.memoryUsage();
+    // publish to pubnub
+    pubnub.publish({
+        channel: channel,
+        message: {
+            y: [
+                Math.ceil(mem.rss / megabyte * 100) / 100, 
+                Math.ceil(mem.heapTotal / megabyte * 100) / 100,
+                Math.ceil(mem.heapUsed / megabyte * 100) / 100
+            ],
+            x: new Date().getTime() / 1000
+        }
+    });
+
+};
+*/
+
+var start = function() {
+    // interval = setInterval(publish_mem, interval_timeout);
+    consumer.on('message', function (message) {
+        // grab the main content from the Kafka message
+        console.log("Abhishek");
+        console.log(message);
+        // var data = JSON.parse(message.value);
+        // console.log(data);
+
+        mem = process.memoryUsage();
+
+        // publish to pubnub
+        pubnub.publish({
+            channel: channel,
+            message: {
+                y: [
+                    Math.ceil(mem.rss / megabyte * 100) / 100, 
+                    Math.ceil(mem.heapTotal / megabyte * 100) / 100,
+                    Math.ceil(mem.heapUsed / megabyte * 100) / 100
+                ],
+                x: new Date().getTime() / 1000
+            }
+        });
+
+    });
+};
+
+var stop = function() {
+    clearInterval(interval);
+};
+
+var server = function() {
+
+    var app = express();
+
+    app.use(express.static(__dirname + '/test'));
+    app.listen(port);
+
+    console.log('');
+    console.log('----------------------')
+        console.log('pubnub-rickshaw-memory'.red);
+    console.log('----------------------')
+        console.log('');
+    console.log('Monitor this instance:');
+    console.log('');
+    console.log('http://localhost:' + String(port) + '?' + channel.red);
+    console.log('');
+    console.log('----------------------')
+        console.log('');
+
+}
+
+var init = function(options) {
+
+    if(typeof options !== "undefined") {
+
+        publish_key = options.publish_key || publish_key;
+        channel = options.channel || channel;
+        interval_timeout = options.timeout || interval_timeout;
+        dev_mode = options.dev || dev_mode;
+        port = options.port || port;
+
+        if(dev_mode) {
+            console.log("============================");
+            server();
+        }
+
+    }
+
+    console.log("++++++++++++++++++++++++");
+    start();
+
+};
+
+module.exports = {
+    start: start,
+    stop: stop,
+    init: init
+};
