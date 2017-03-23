@@ -4,7 +4,7 @@ mvn package
 
 echo '...Starting Producer App...'
 
-echo $STREAMAI_HOME/logs/java/simpleproducer/producer.logs
+echo $STREAMAI_HOME/logs/java/simpleproducer/producer.log
 
 mvn exec:java -Dexec.mainClass="SimpleProducer" -Dexec.args="teststreamai1" 2>&1 1>$STREAMAI_HOME/logs/java/simpleproducer/producer.log &
 

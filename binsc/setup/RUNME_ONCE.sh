@@ -15,7 +15,7 @@ echo ''
 $SCRIPTS_HOME/setup/config-services-before-starting.sh
 
 echo '...Start All Services...'
-$SCRIPTS_HOME/service/start-all-services.sh
+$SCRIPTS_HOME/serviceutils/start-core-services.sh
 
 echo '...Create Examples Data Sources...'
 $SCRIPTS_HOME/setup/create-example-datasources.sh
