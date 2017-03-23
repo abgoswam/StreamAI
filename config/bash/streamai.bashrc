@@ -19,7 +19,7 @@ export JRE_HOME=$JAVA_HOME/jre
 export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
 
 # Scripts Home
-export PATH=$SCRIPTS_HOME/service:$SCRIPTS_HOME/util:$PATH
+export PATH=$SCRIPTS_HOME/serviceutils:$SCRIPTS_HOME/apputils:$PATH
 
 # Kafka
 export KAFKA_HOME=$DEV_INSTALL_HOME/kafka_2.11-0.10.1.0
@@ -28,9 +28,4 @@ export PATH=$KAFKA_HOME/bin:$PATH
 # ZooKeeper
 export ZOOKEEPER_HOME=$KAFKA_HOME
 export PATH=$ZOOKEEPER_HOME/bin:$PATH
-
-# Flask
-export FLASK_APP=$STREAMAI_HOME/python/flask-producer.py
-export LC_ALL=C.UTF-8
-export LANG=C.UTF-8
 
