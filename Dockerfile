@@ -36,6 +36,8 @@ RUN \
  && apt-get install -y openssh-server \
  && apt-get install -y apache2 \
  && apt-get install -y libssl-dev \
+ && apt-get install -y nodejs  \
+ && apt-get install -y npm  \
  && apt-get install -y python3.5 \
  && apt-get install -y python3-pip 
 

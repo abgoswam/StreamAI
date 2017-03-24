@@ -11,3 +11,8 @@ echo '...Configuring Kafka...'
 # ZooKeeper
 echo '...Configuring ZooKeeper...'
 
+echo '...Configuring Visualizer app...'
+cd $STREAMAI_HOME/web/pubnub-rickshaw-realtime
+npm install
+cd ~
+

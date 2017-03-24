@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo '...Starting Visualizer App...'
-node web/pubnub-rickshaw-realtime/test.js 2>&1 1>$LOGS_HOME/web/kafka-predictor-app/visualizer.log &
+nodejs $STREAMAI_HOME/web/pubnub-rickshaw-realtime/test.js 2>&1 1>$LOGS_HOME/web/kafka-predictor-app/visualizer.log &
 echo echo '...logs for visualizer available with "tail -f $STREAMAI_HOME/logs/web/kafka-predictor-app/visualizer.log"'
 
 sleep 10s
